@@ -1,0 +1,283 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+    <head>
+
+		<!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+        <title>Bootstrap 4 Template with Sidebar Menu</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500&display=swap">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'assets/css/jquery.mCustomScrollbar.min.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/media-queries.css' %}">
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="{% static 'assets/ico/favicon.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'assets/ico/apple-touch-icon-144-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'assets/ico/apple-touch-icon-114-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'assets/ico/apple-touch-icon-72-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'assets/ico/apple-touch-icon-57-precomposed.png' %}">
+
+    </head>
+
+    <body>
+
+		<!-- Wrapper -->
+    	<div class="wrapper">
+
+			<!-- Sidebar -->
+			<nav class="sidebar">
+				
+				<!-- close sidebar menu -->
+				<div class="dismiss">
+					<i class="fas fa-arrow-left"></i>
+				</div>
+				
+				<ul class="list-unstyled menu-elements">
+					<li>
+						<a class="text-left" href="{%url 'index' %}"><i class="fas fa-home"></i>Home</a>
+					</li>
+					<li class="active">
+						<a class="text-left" href="{%url 'org_profile'%}"><i class="fas fa-user"></i> Profile</a>
+					</li>
+					<li>
+						<a class="text-left" href="{%url 'add_event'%}"><i class="fa-solid fa-plus"></i> Create New Event</a>
+					</li>
+					<li>
+						<a class="text-left" href=""><i class="fa-solid fa-ticket"></i> My Events</a>
+					</li>
+					<li>
+						<a class="text-left" href=""><i class="fas fa-envelope"></i> Contact us</a>
+					</li>
+					<li>
+						<a class="text-left" href="{{user_logout}}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+					</li>
+				</ul>
+			
+			</nav>
+			<!-- End sidebar -->
+			
+			<!-- Dark overlay -->
+    		<div class="overlay"></div>
+
+			<!-- Content -->
+			<div class="content">
+			
+				<!-- open sidebar menu -->
+				<a class="btn btn-secondary btn-customized-5 open-menu" href="#" role="button">
+                    <i class="fas fa-align-left"></i> <span>Menu</span>
+                </a>
+			
+		        <!-- Top content -->
+		        <div class="top-content section-container" id="top-content">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+			                	<h1 class="wow fadeIn"><strong>Create & Sell Tickets Online!</strong></h1>
+			                	<div class="description wow fadeInLeft">
+			                		<p>
+			                			List Sports events online, manage your Sports Events, and sell tickets easily.
+										Our ticket sales platform provides all the facilities you need. 
+			                		</p>
+			                	</div>
+			                	<div class="buttons wow fadeInUp">							
+									<a class="btn btn-secondary  scroll-link" href="#section-1" role="button">
+										<i class="fas fa-book-open"></i> Know More
+									</a>
+
+									<a class="btn btn-secondary " href="{%url 'add_event'%}" role="button">
+										<i class="fa-solid fa-plus"></i>
+										Create New Event
+									</a>
+								</div>
+			                </div>
+			            </div>
+			        </div>
+		        </div>
+		
+		        <!-- Section 1 -->
+		        <div class="section-1-container section-container" id="section-1">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col section-1 section-description wow fadeIn">
+			                    <h2>Banefits</h2>
+			                    <div class="divider-1 wow fadeInUp"><span></span></div>
+			                </div>
+			            </div>
+			            <div class="row">
+		                	<div class="col-md-4 section-1-box wow fadeInUp">
+		                		<div class="row">
+		                			<div class="col-md-4">
+					                	<div class="section-1-box-icon">
+					                		<i class="fa-regular fa-pen-to-square"></i>
+					                	</div>
+				                	</div>
+			                		<div class="col-md-8">
+			                    		<h3>Event Constructor</h3>
+			                    		<p>Create New Event tool will help you make attractive event listings and start selling tickets online.</p>
+			                    	</div>
+			                    </div>
+		                    </div>
+		                    <div class="col-md-4 section-1-box wow fadeInDown">
+			                	<div class="row">
+		                			<div class="col-md-4">
+					                	<div class="section-1-box-icon">
+					                		<i class="fas fa-cog"></i>
+					                	</div>
+				                	</div>
+			                		<div class="col-md-8">
+			                    		<h3>Smart Event Management</h3>
+			                    		<p>Use our System to automate your sales.You will have 24/7 access to detailed ticket sales statistics.</p>
+			                    	</div>
+			                    </div>
+		                    </div>
+		                    <div class="col-md-4 section-1-box wow fadeInUp">
+			                	<div class="row">
+		                			<div class="col-md-4">
+					                	<div class="section-1-box-icon">
+					                		<i class="fa-regular fa-clock"></i>
+					                	</div>
+				                	</div>
+			                		<div class="col-md-8">
+			                    		<h3>Time Savings</h3>
+			                    		<p>Online ticket booking eliminates the long queues or wait on hold, saving customers time.</p>
+			                    	</div>
+			                    </div>
+		                    </div>
+			            </div>
+			        </div>
+		        </div>
+		
+				<!-- Section 3 -->
+		        <div class="section-3-container section-container" id="section-3">
+			        <div class="container">
+			        	
+			            <div class="row">
+			                <div class="col section-3 section-description wow fadeIn">
+			                    <h2>Security Policy</h2>
+			                    <div class="divider-1 wow fadeInUp"><span></span></div>
+			                </div>
+			            </div>
+			            
+			            <div class="row">
+			                <div class="col-md-6 section-3-box wow fadeInLeft">
+			                	<div class="row">
+			                		<div class="col-md-3">
+			                			<div class="section-3-box-icon">
+			                				<i class="fa-solid fa-user"></i>
+			                			</div>
+			                		</div>
+			                		<div class="col-md-9">
+			                			<h3>All collected customer information is protected and encrypted.</h3>
+			                		</div>
+			                	</div>
+			                </div>
+			                <div class="col-md-6 section-3-box wow fadeInLeft">
+			                	<div class="row">
+			                		<div class="col-md-3">
+			                			<div class="section-3-box-icon">
+			                				<i class="fa-solid fa-lock"></i>
+			                			</div>
+			                		</div>
+			                		<div class="col-md-9">
+			                			<h3>Data is not transferred or used by third parties</h3>
+			                		</div>
+			                	</div>
+			                </div>
+			            </div>
+			            
+			            <div class="row">
+			                <div class="col-md-6 section-3-box wow fadeInLeft">
+			                	<div class="row">
+			                		<div class="col-md-3">
+			                			<div class="section-3-box-icon">
+			                				<i class="fas fa-cloud"></i>
+			                			</div>
+			                		</div>
+			                		<div class="col-md-9">
+			                			<h3>Secured payment process</h3>
+			                		</div>
+			                	</div>
+			                </div>
+			                <div class="col-md-6 section-3-box wow fadeInLeft">
+			                	<div class="row">
+			                		<div class="col-md-3">
+			                			<div class="section-3-box-icon">
+			                				<i class="fa-solid fa-address-card"></i>
+			                			</div>
+			                		</div>
+			                		<div class="col-md-9">
+			                			<h3>User Identification, Authentication, and Authorization Policy</h3>
+			                		</div>
+			                	</div>
+			                </div>
+			            </div>
+		
+			        </div>
+		        </div>
+		
+				<!-- Section 4 -->
+		        <div class="section-4-container section-container section-container-image-bg" id="section-4">
+			        <div class="container">
+			            <div class="row">
+			                <div class="col section-4 section-description wow fadeInLeftBig">
+			                	<h2>Ready to Try the Platform?</h2>
+			                    <p>
+			                    	Selling tickets has never been easier. Sign up and create your first sport event listing on OSTB. Let's fill every seat in the hall together.
+			                    </p>
+			                </div>
+			            </div>
+			            <div class="row">
+			            	<div class="col section-bottom-button wow fadeInUp">
+		                        <a class="btn btn-outline-secondary" href="{%url 'add_event'%}" role="button">
+									<i class="fas fa-plus"></i> Create Event
+								</a>
+			            	</div>
+			            </div>
+			        </div>
+		        </div>
+		
+		        <!-- Footer -->
+		        <footer class="footer-container">
+		
+			        <div class="container">
+			        	<div class="row">
+		
+		                    <div class="col">
+		                    	<!-- &copy; Bootstrap 4 Template with Sidebar Menu. Download it for free on <a href="https://azmind.com">AZMIND</a>. -->
+		                    </div>
+		
+		                </div>
+			        </div>
+		
+		        </footer>
+	        
+	        </div>
+	        <!-- End content -->
+        
+        </div>
+        <!-- End wrapper -->
+
+        <!-- Javascript -->
+		<script src="https://kit.fontawesome.com/17178ec874.js" crossorigin="anonymous"></script>
+		<script src="{% static 'assets/js/jquery-3.3.1.min.js'%}"></script>
+		<script src="{% static 'assets/js/jquery-migrate-3.0.0.min.js' %}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="{% static 'assets/js/jquery.backstretch.min.js'%}"></script>
+        <script src="{% static 'assets/js/wow.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+        <script src="{% static 'assets/js/scripts.js' %}"></script>
+
+    </body>
+
+</html>

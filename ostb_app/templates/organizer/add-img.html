@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{%load static%}
+
+{% block content %}
+    <div class="rent-venue-application">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="heading-text">
+                        <h4>Upload Images</h4>
+                    </div>
+                    <div class="contact-form">
+                        <form id="" action="{{add_img}}" method="post" enctype="multipart/form-data">
+                        	<div class="row">
+
+                            	<div class="col-md-6 col-sm-12">
+									<fieldset>
+										<label for="poster_image" class="form-label">Upload Poster Image</label>
+                                        <input name="poster_image" class="form-control form-control-lg" id="" type="file" />
+									</fieldset>
+								</div>
+
+                                <div class="col-md-6 col-sm-12">
+									<fieldset>
+										<label for="banner_image" class="form-label">Upload Banner Image</label>
+                                        <input name = "banner_image" class="form-control form-control-lg" id="" type="file" />
+									</fieldset>
+								</div>
+
+								<div class="col-md-6 col-sm-12">
+                                    <fieldset>
+                                      <a href="{%url 'add_event'%}" class="main-dark-button">Back</a>
+                                    </fieldset>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12">
+                                    <fieldset>
+                                        <button type="submit" id="" class="main-dark-button">Next</button>
+                                    </fieldset>
+                                </div>
+                          </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
