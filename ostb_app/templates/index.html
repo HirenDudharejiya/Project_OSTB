@@ -17,23 +17,17 @@
 {% block content %}
     <!-- ***** Main Banner Area Start ***** -->
     <div class="main-banner">
-        {% comment %} <div class="counter-content">
-            <ul>
-                <li>Days<span id="days"></span></li>
-                <li>Hours<span id="hours"></span></li>
-                <li>Minutes<span id="minutes"></span></li>
-                <li>Seconds<span id="seconds"></span></li>
-            </ul>
-        </div> {% endcomment %}
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="main-content">
-                        {% comment %} <h6>Opening on Friday, December 22</h6> {% endcomment %}
-                        {% comment %} <h2>Gokuldham Premiere legue</h2> {% endcomment %}
                         {%if not user.is_authenticated%}
                         <button type="button" class="btn btn-outline-secondary"><a style="color:white;" href="{%url 'user_login'%}">LOGIN</a></button> 
+                        {% endif %}
+                    </div>
+                    <div class="main-content">
+                        {%if not user.is_authenticated%}
+                        <button type="button" class="btn btn-outline-secondary"><a style="color:white;" href="{%url 'user_login'%}">CREATE EVENT</a></button> 
                         {% endif %}
                     </div>
                 </div>

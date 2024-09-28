@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-from .models import UserProfile,Event,Poster
+from .models import UserProfile,Event,Poster,Location
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_exempt
 
@@ -40,7 +40,7 @@ def user_register(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         email = request.POST.get('email')
-        number = request.POST.get('number')
+        mobile_no = request.POST.get('mobile_no')
         date_of_birth = request.POST.get('date_of_birth')
         password = request.POST.get('password')
         confirmpassword = request.POST.get('confirmpassword')
@@ -56,10 +56,10 @@ def user_register(request):
         elif usere:
             message = "Email already exists, please provide a different email"
         elif password != confirmpassword:
-            message = "Password and confirm password doesnot matches"
+            message = "Password and confirm password does not matches"
         else:
             user = User.objects.create_user( username=username, first_name=first_name, last_name=last_name, email=email, password=password)
-            profile = UserProfile(date_of_birth=date_of_birth, mobile_no=number, user_type=usertype, users_model=user)
+            profile = UserProfile(date_of_birth=date_of_birth, mobile_no=mobile_no, user_type=usertype, users_model=user)
 
             user.save()
             profile.save()
@@ -120,30 +120,44 @@ def add_event(request):
         event_enddate = request.POST.get('event_enddate')
 
         event = Event(event_name = event_name, event_description = event_description, event_startdate = event_startdate, event_enddate = event_enddate)
-
         event.save()
-
+         
         return redirect("add_img")
-
     return render(request,"organizer/add-event.html")
 
 #Views for add Poster images
+@csrf_exempt
 def add_img(request):
     if request.method == "POST":
         poster_image = request.FILES.get('poster_image')
         banner_image = request.FILES.get('banner_image')
-        event_obj = Event.objects.filter(id=request.id).first()
 
-        img_obj = Poster.objects.create(poster_image=poster_image,banner_image=banner_image,event=event_obj)
+        img_obj = Poster.objects.create(poster_image=poster_image,banner_image=banner_image,)
         img_obj.save()
+
+        return redirect("add_location")
         
     return render(request,"organizer/add-img.html")
 
 #Views for add Location
+@csrf_exempt
 def add_location(request):
+    if request.method == "POST":
+        line1 = request.POST.get('line1')
+        line2 = request.POST.get('line2')
+        zip_code = request.POST.get('zip_code')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+
+        location = Location(line1 = line1, line2 = line2, zip_code = zip_code, city = city, state = state)
+        location.save()
+
+        return redirect("add_ticket")
+
     return render(request,"organizer/add-location.html")
 
 #Views for add Ticket Details
+@csrf_exempt
 def add_ticket(request):
     return render(request,"organizer/add-ticket-details.html")
 
