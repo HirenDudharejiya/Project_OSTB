@@ -1,3 +1,10 @@
 ostb_app/__pycache__/
 ostb_app/__pycache__/
 ostb_project/__pycache__/
+__pycache__/
+ostb_app/migrations/__pycache__/
+ostb_app/migrations/__pycache__/
+ostb_app/migrations/__pycache__/
+ostb_app/migrations/__pycache__/
+ostb_app/migrations/
+ostb_app/migrations/0001_initial.py

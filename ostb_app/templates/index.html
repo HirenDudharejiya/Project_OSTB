@@ -20,11 +20,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="main-content">
+                    {% comment %} <div class="main-content">
                         {%if not user.is_authenticated%}
                         <button type="button" class="btn btn-outline-secondary"><a style="color:white;" href="{%url 'user_login'%}">LOGIN</a></button> 
                         {% endif %}
-                    </div>
+                    </div> {% endcomment %}
                     <div class="main-content">
                         {%if not user.is_authenticated%}
                         <button type="button" class="btn btn-outline-secondary"><a style="color:white;" href="{%url 'user_login'%}">CREATE EVENT</a></button> 
@@ -72,185 +72,71 @@
         </div>
     </div>
 
-    
-    <!-- *** Amazing Venus ***-->
-    <!-- <div class="amazing-venues">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9">
-                    <div class="left-content">
-                        <h4>Three Amazing Venues for events</h4>
-                        <p>ArtXibition Event Template is brought to you by Tooplate website and it included total 7 HTML pages. 
-                        These are <a href="{%url 'index'%}">Homepage</a>, <a href="{%url 'about'%}">About</a>, 
-                        {% comment %} <a href="{%url ''%}">Rent a venue</a> {% endcomment %}, <a href="{%url 'events'%}">shows &amp; events</a>, 
-                        <a href="{% url 'event_list' %}">event details</a>, <a href="{% url 'tickets' %}">tickets</a>, and <a href="{% url 'ticket_details' %}">ticket details</a>. 
-                        You can feel free to modify any page as you like. If you have any question, please visit our <a href="#" target="_blank">Contact page</a>.</p>
-                        <br>
-                        <p>You can use this event template for your commercial or business website. You are not permitted to redistribute this template ZIP file on any template download website. If you need the latest HTML templates, you may visit <a href="#" target="_blank">Too CSS</a> website that features a great collection of templates in different categories.</p>
-                    </div>
+<!-- *** Tickets Section ***-->
+{% comment %} <div class="venue-tickets">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-heading">
+                    <h2>Tickets</h2>
                 </div>
-                <div class="col-lg-3">
-                    <div class="right-content">
-                        <h5><i class="fa fa-map-marker"></i> Visit Us</h5>
-                        <span>5 College St NW, <br>Norcross, GA 30071<br>United States</span>
-                        <div class="text-button"><a href="{% url 'events' %}">Need Directions? <i class="fa fa-arrow-right"></i></a></div>
+            </div>
+
+            {% for ticket in events %}
+            <div class="col-lg-4">
+                <div class="venue-item">
+                    <div class="thumb">
+                        <img src="{{ ticket.event.image.url }}" alt="Ticket Image">
+                    </div>
+                    <div class="down-content">
+                        <div class="left-content">
+                            <div class="main-white-button">
+                                <a href=" ">Purchase Tickets</a>
+                            </div>
+                        </div>
+                        <div class="right-content">
+                            <h4>{{ ticket.event.event_name }}</h4>
+                            <p>{{ ticket.event.event_description|truncatewords:20 }}</p>
+                            <ul>
+                                <li><i class="fa fa-sitemap"></i>{{ ticket.quantity }}</li>
+                                <li><i class="fa fa-user"></i>{{ ticket.available_ticket }}</li>
+                            </ul>
+                            <div class="price">
+                                <span>1 ticket<br>from <em>INR {{ ticket.ticket_price }}</em></span>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
-        </div>
-    </div> -->
-
-
-    <!-- *** Map ***-->
-    <!-- <div class="map-image">
-        <img src="{%static 'images/map-image.jpg'%}" alt="Maps of 3 Venues">
-    </div> -->
-
-
-    <!-- *** Tickets ***-->
-    <div class="venue-tickets">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-heading">
-                        <h2>Tickets</h2>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="venue-item">
-                        <div class="thumb">
-                            <img src="{%static 'images/cricket-tickets.jpg' %}" alt="">
-                        </div>
-                        <div class="down-content">
-                            <div class="left-content">
-                                <div class="main-white-button">
-                                    <a href="{% url 'ticket_details' %}">Purchase Tickets</a>
-                                </div>
-                            </div>
-                            <div class="right-content">
-                                <h4>Cricket Tournaments</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur vinzi iscing elit, sed doers kontra.</p>
-                                <ul>
-                                    <li><i class="fa fa-sitemap"></i>250</li>
-                                    <li><i class="fa fa-user"></i>500</li>
-                                </ul>
-                                <div class="price">
-                                    <span>1 ticket<br>from <em>INR 200</em></span>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="venue-item">
-                        <div class="thumb">
-                            <img src="{%static 'images/football-tickets.jpg'%}" alt="">
-                        </div>
-                        <div class="down-content">
-                            <div class="left-content">
-                                <div class="main-white-button">
-                                    <a href="{% url 'ticket_details' %}">Purchase Tickets</a>
-                                </div>
-                            </div>
-                            <div class="right-content">
-                                <h4>Football Matches</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur vinzi iscing elit, sed doers kontra.</p>
-                                <ul>
-                                    <li><i class="fa fa-sitemap"></i>450</li>
-                                    <li><i class="fa fa-user"></i>650</li>
-                                </ul>
-                                <div class="price">
-                                    <span>1 ticket<br>from <em>INR 100</em></span>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="venue-item">
-                        <div class="thumb">
-                            <img src="{%static 'images/volleyball-tickets.jpg'%}" alt="">
-                        </div>
-                        <div class="down-content">
-                            <div class="left-content">
-                                <div class="main-white-button">
-                                    <a href="{% url 'ticket_details' %}">Purchase Tickets</a>
-                                </div>
-                            </div>
-                            <div class="right-content">
-                                <h4>volleyball Tournaments</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur vinzi iscing elit, sed doers kontra.</p>
-                                <ul>
-                                    <li><i class="fa fa-sitemap"></i>450</li>
-                                    <li><i class="fa fa-user"></i>750</li>
-                                </ul>
-                                <div class="price">
-                                    <span>1 ticket<br>from <em>INR 300</em></span>
-                                </div>
-                            </div> 
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
+</div> {% endcomment %}
 
-
-    <!-- *** Coming Events ***-->
-    <div class="coming-events">
-        <div class="left-button">
-            <div class="main-white-button">
-                <a href="{% url 'events' %}">Discover More</a>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="event-item">
-                        <div class="thumb">
-                            <a href="{% url 'events' %}"><img src="{%static 'images/stadium-01.jpg'%}" alt=""></a>
-                        </div>
-                        <div class="down-content">
-                            <a href="{% url 'events' %}"><h4>Athletic Stadium</h4></a>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Tuesday: 15:30-19:30</li>
-                                <li><i class="fa fa-map-marker"></i> Sector 15, Gandhinagar, Gujarat</li>
-                            </ul>
-                        </div>
+<!-- *** Coming Events Section ***-->
+<div class="coming-events">
+    <div class="container">
+        <div class="row">
+            {% for event in events %}
+            <div class="col-lg-4">
+                <div class="event-item">
+                    <div class="thumb">
+                        <img src="{{ event.image.url }}" alt="Event Image">
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="event-item">
-                        <div class="thumb">
-                            <a href="{% url 'events' %}"><img src="{%static 'images/stadium-02.jpg'%}" alt=""></a>
-                        </div>
-                        <div class="down-content">
-                            <a href="{% url 'events' %}"><h4>Sector 26 Cricket Ground</h4></a>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Wednesday: 08:00-14:00</li>
-                                <li><i class="fa fa-map-marker"></i>Kishan Nagar, Sector 26, Gandhinagar, Gujarat</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="event-item">
-                        <div class="thumb">
-                            <a href="{% url 'events' %}"><img src="{%static 'images/stadium-03.jpg' %}" alt=""></a>
-                        </div>
-                        <div class="down-content">
-                            <a href="{% url 'events' %}"><h4>Sports Ground</h4></a>
-                            <ul>
-                                <li><i class="fa fa-clock-o"></i> Thursday: 09:00-23:00</li>
-                                <li><i class="fa fa-map-marker"></i> Infocity, Gandhinagar, Gujarat</li>
-                            </ul>
-                        </div>
+                    <div class="down-content">
+                        <a href="{% url 'ticket_details' event.id %}">
+                            <h4>{{ event.event_name }}</h4>
+                        </a>
+                        <ul>
+                            <li><i class="fa fa-clock-o"></i> {{ event.event_startdate|date:"l: H:i" }} - {{ event.event_enddate|date:"H:i" }}</li>
+                            <li><i class="fa fa-map-marker"></i> {{ event.line1 }}, {{ event.city }}, {{ event.state }}</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-
-
+</div>
 
 {% endblock content %}

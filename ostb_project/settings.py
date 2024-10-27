@@ -53,6 +53,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ostb_project.urls'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 TEMPLATE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 TEMPLATES = [
@@ -66,6 +70,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.static',
+                'django.template.context_processors.media',
+                'django.template.context_processors.tz',
+                'django.template.context_processors.csrf',
             ],
         },
     },
@@ -80,7 +88,7 @@ WSGI_APPLICATION = 'ostb_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ostb',
+        'NAME': 'db_ostb',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',

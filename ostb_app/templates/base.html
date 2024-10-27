@@ -3,160 +3,183 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="Tooplate">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-    
+
     <title>Online Sports Ticket Booking System</title>
 
-    <!-- Additional CSS Files -->
-    {% comment %} <link href="{%static 'css/style.css'%}" rel="stylesheet">
-    <link href="{%static 'css/style2.css'%}" rel="stylesheet"> {% endcomment %}
-    <link href= "{%static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link href= "{%static 'css/font-awesome.css'%}" rel="stylesheet">
-    <link href="{%static 'css/owl-carousel.css'%}" rel="stylesheet">
-    <link href="{%static 'css/tooplate-artxibition.css'%}" rel="stylesheet">
-	<link rel="stylesheet" href="{%static 'css/style.css'%}" rel="stylesheet">
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <!-- CSS Files -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/owl-carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tooplate-artxibition.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* Light mode styles */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Poppins', sans-serif;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #555;
+        }
+        header, footer {
+            background-color: #f0f0f0;
+            padding: 20px 0;
+        }
+        .nav > li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .sub-footer {
+            background-color: #e0e0e0;
+            padding: 20px 0;
+        }
+        .social-links ul li a {
+            color: #000;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #121212 !important;
+            color: #ffffff !important;
+        }
+        .dark-mode header, .dark-mode footer {
+            background-color: #1e1e1e !important;
+        }
+        .dark-mode a {
+            color: #ffffff !important;
+        }
+        .dark-mode .sub-footer {
+            background-color: #2a2a2a;
+        }
+        .dark-mode .social-links ul li a {
+            color: #ffffff;
+        }
+        
+    </style>
 </head>
 
-    <body>
-        <!-- ***** Pre HEader ***** -->
-        <!-- <div class="pre-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-sm-6">
-                        <span>Hey! The Show Is Starting In 5 Days.</span>
-                    </div>
-                    <div class="col-lg-6 col-sm-6">
-                        <div class="text-button">
-                            <a href="rent-venue.html">Contact Us Now! <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+<body>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <a href="{% url 'index' %}" class="logo">OS<em>TB</em></a>
+                        <ul class="nav">
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            <li><a href="{% url 'events' %}">Events</a></li>
+                            {% comment %} <li><a href="{% url 'tickets' %}">Tickets</a></li> {% endcomment %}
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{% url 'user_login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                    </nav>
                 </div>
             </div>
-        </div> -->
-        <!-- ***** Header Area Start ***** -->
-        <header class="header-area header-sticky">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <nav class="main-nav">
-                            <!-- ***** Logo Start ***** -->
-                            <a href="{%url 'index'%}" class="logo">OS<em>TBS</em></a>
-                            <!-- ***** Logo End ***** -->
-                            <!-- ***** Menu Start ***** -->
-                            <ul class="nav">
-                                <li><a href="{% url 'index' %}">Home</a></li>
-                                <li><a href="{%url 'events'%}">Events</a></li> 
-                                <li><a href="{%url 'tickets'%}">Tickets</a></li> 
-                                <li><a href="{% url 'about' %}">About Us</a></li>
-                                
-                                <!-- LOGIN Button  -->
-                                    {% comment %} <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="main-content">
-                                                {%if not user.is_authenticated%}
-                                                <button type="button" class="btn btn-outline-secondary"><a style="color:white;" href="{%url 'user_login'%}">LOGIN</a></button> 
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div> {% endcomment %}
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
 
-                                <!--LOGOUT BUTTON-->
-                                {% if user.is_authenticated %}
-                                <li>
-                                    <a href="{% url 'user_logout' %}">Logout</a>
-                                </li>
-                                {% endif %}
-                            </ul>
+    {% block content %}
+    {% endblock content %}
 
-                            <a class='menu-trigger'>
-                                <span>Menu</span>
-                            </a>
-                            <!-- ***** Menu End ***** -->
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- ***** Header Area End ***** -->
-
-        {% block content %}
-
-        {% endblock content %}   
-
-        <!-- *** Footer *** -->
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="sub-footer">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="logo"><span>OS<em>TBS</em></span></div>
+    <!-- *** Footer *** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sub-footer">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="logo"><span>OS<em>TBS</em></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="menu">
+                                    <ul>
+                                        <li><a href="{% url 'index' %}">Home</a></li>
+                                        <li><a href="{% url 'events' %}">Events</a></li>
+                                        <li><a href="{% url 'tickets' %}">Tickets</a></li>
+                                        <li><a href="{% url 'about' %}">About Us</a></li>
+                                    </ul>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="menu">
-                                        <ul>
-                                            <li><a href="{% url 'index' %}">Home</a></li>
-                                            <li><a href="{%url 'events'%}">Events</a></li> 
-                                            <li><a href="{%url 'tickets'%}">Tickets</a></li> 
-                                            <li><a href="{% url 'about' %}">About Us</a></li> 
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="social-links">
-                                        <ul>
-                                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                                        </ul>
-                                    </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="social-links">
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
 
-        <!-- jQuery -->
-        <script src="{%static 'js/jquery-2.1.0.min.js'%}"></script>
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Plugins -->
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imgfix.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.js' %}"></script>
+    <script src="{% static 'js/accordions.js' %}"></script>
+    <script src="{% static 'js/owl-carousel.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Global Init -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-        <!-- Bootstrap -->
-        <script src="{%static 'js/popper.js'%}"></script>
-        <script src="{%static 'js/bootstrap.min.js'%}"></script>
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+            
+            // Toggle button text
+            if (document.body.classList.contains('dark-mode')) {
+                this.textContent = 'Light Mode';
+            } else {
+                this.textContent = 'Dark Mode';
+            }
+            
+            // Optional: Store mode in localStorage
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
 
-        <!-- Plugins -->
-        <script src="{%static 'js/scrollreveal.min.js'%}"></script>
-        <script src="{%static 'js/waypoints.min.js'%}"></script>
-        <script src="{%static 'js/jquery.counterup.min.js'%}"></script>
-        <script src="{%static 'js/imgfix.min.js'%}"></script> 
-        <script src="{%static 'js/mixitup.js'%}"></script> 
-        <script src="{%static 'js/accordions.js'%}"></script>
-        <script src="{%static 'js/owl-carousel.js'%}"></script>
-        <script src="{%static 'js/jquery.min.js'%}"></script>
-        <script src="{%static 'js/popper.js'%}"></script>
-        <script src="{%static 'js/bootstrap.min.js'%}"></script>
-        <script src="{%static 'js/main.js'%}"></script>
-        
-        <!-- Global Init -->
-        <script src="{%static 'js/custom.js'%}"></script>
-
-        <!--ion-icons-->
-        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-    </body>
+        // Load mode from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeToggle').textContent = 'Light Mode';
+            }
+        });
+    </script>
+</body>
 </html>

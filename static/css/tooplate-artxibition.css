@@ -1379,7 +1379,7 @@ Rent Venue Page
 */
 
 .page-heading-rent-venue {
-  background-image: url(../images/rent_venue_bg.jpg);
+  background:#000000;
   background-size: cover;
   background-repeat: no-repeat;
   padding: 110px 0px;
@@ -1559,9 +1559,9 @@ Shows Events Page
 */
 
 .page-heading-shows-events {
-  background-image: url(../images/various-sport-tools-grass.jpg);
+  background: #000000;
   background-size: cover;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
   padding: 110px 0px;
   text-align: center;
 }

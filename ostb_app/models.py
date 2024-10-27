@@ -1,17 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Models for Customer & Sports Dealer
-USER_TYPE = [("Customer","Customer"), ("Event_organizer","Event_organizer")]
+# Models for Customer & Event_organizer
+USER_TYPE = [("Customer","Customer"),
+            ("Event_organizer","Event_organizer")]
+
+TICKET_TYPE = [("Paid","Paid"),
+               ("Free","Free")]
 
 class UserProfile(models.Model):
+    users_model = models.OneToOneField(User, on_delete=models.CASCADE)
     date_of_birth = models.DateField()
-    mobile_no = models.BigIntegerField()
-    user_type = models.CharField(choices=USER_TYPE, max_length=20)
-    users_model = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    
-    class Meta:
-        verbose_name_plural = "UserProfile"
+    mobile_no = models.CharField(max_length=15)
+    usertype = models.CharField(choices=USER_TYPE, max_length=20, default='default_value')
+
+    def __str__(self):
+        return self.users_model.username
 
 # Models for Event Details
 class Event(models.Model):
@@ -19,66 +23,31 @@ class Event(models.Model):
     event_description = models.TextField()
     event_startdate = models.DateTimeField()
     event_enddate = models.DateTimeField()
+    ticket_price = models.FloatField()
+    quantity = models.PositiveIntegerField()
+    available_tickets = models.PositiveIntegerField(default=0) 
+    image = models.ImageField(upload_to='events/images/', default='path/to/default/image.jpg')
+    line1 = models.CharField(max_length=50, default='Default Address')
+    zipcode = models.CharField(max_length=10, default='000000')
+    city = models.CharField(max_length=50, default='Default City')
+    state = models.CharField(max_length=50, default='Default State')
 
     class Meta:
         verbose_name_plural = "Event"
 
-class Category(models.Model):
-    category_name = models.CharField(max_length=20)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Category"
-
-class Poster(models.Model):
-    poster_image = models.ImageField()
-    banner_image = models.ImageField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Poster"
-
-class Location(models.Model):
-    line1 = models.CharField(max_length=50)
-    line2 = models.CharField(max_length=50, blank=True)
-    zip_code = models.BigIntegerField()
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, null=True, blank=True)
-
-    class Meta:
-        verbose_name_plural = "Location"
-
-# Models for Tickets
-class TicketType(models.Model):
-    ticket_type = models.CharField(max_length=20)
-
-    class Meta:
-        verbose_name_plural = "TicketType"
-
-class Ticket(models.Model):
-    ticket_price = models.FloatField()
-    discount = models.FloatField()
-    quantity = models.IntegerField()
-    returnable = models.BooleanField(default=False)
-    return_condition = models.CharField(max_length=50, blank=True)
-    user_model = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    ticket_type = models.ForeignKey(TicketType, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name_plural = "Ticket"
+    def __str__(self):
+        return self.event_name
 
 # Models for Payment
 class Payment(models.Model):
-    address = models.CharField(max_length=50)
-    city = models.CharField(max_length=50)
-    postal_code = models.IntegerField()
-    country = models.CharField(max_length=50)
     amount = models.FloatField()
     acknowledgement_no = models.CharField(max_length=50)
     status = models.CharField(max_length=20)
     user_model = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    event_model = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "Payment"
+
+    def __str__(self):
+        return f"Payment {self.acknowledgement_no} - {self.status}"

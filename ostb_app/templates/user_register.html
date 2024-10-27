@@ -1,86 +1,82 @@
-{% extends "base.html" %}
 {% load static %}
 
-{% block content%}
-		<section class="ftco-section">
-			<div class="container">
-				<div class="row justify-content-center">
-					<div class="col-md-12 col-lg-10">
-						<div class="wrap d-md-flex">
-							<!-- <div class="img" style="background-image: url(images/bg-1.jpg);"> -->
-						</div>
+<head>
+    <link rel="stylesheet" href="{% static 'css/registration.css' %}">
+</head>
+<body>
+    <section class="container">
+        <div class="title">Create an Account</div>
+        <div class="content">
+            <form method="POST" action="{{ user_register }}">
+                {% csrf_token %}
 
-						<div class="login-wrap p-4 p-md-5">
-							<div class="d-flex">
-								<div class="w-100">
-									<h3 class="mb-4">Sign Up</h3>
-								</div>
-							</div>
-							<form method="POST" action="{{user_register}}" class="signin-form">
-								{% csrf_token %}
-								<div class="row">
-									<div class="col-md-6 col-sm-12">
-										<fieldset>
-											<select name="usertype" id="usertype" class="form-control">
-												<option value="">Select UserType</option>
-												<option value="Customer">Customer</option>
-												<option value="Event_organizer">Event_organizer</option>
-											</select>
-										</fieldset>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="first_name">FirstName</label>
-										<input type="text" name="first_name" id="first_name" class="form-control" placeholder="FirstName" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="last_name">LastName</label>
-										<input type="text" id="last_name" name="last_name" class="form-control" placeholder="LastName" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="username">Username</label>
-										<input type="text" id="username" name="username" class="form-control" placeholder="Username" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="email">Email ID</label>
-										<input type="text" id="email" name="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email Address" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="number">Phone Number</label>
-										<input type="number" id="number" name="number" class="form-control" placeholder="Phone Number" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="dob">Date of Birth</label>
-										<input type="date" id="date_of_birth" name="date_of_birth" class="form-control" placeholder="Date of Birth" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="password">Password</label>
-										<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-									</div>
-									<div class="form-group mb-3">
-										<label class="label" for="password">Confirm Password</label>
-										<input type="password" id="confirmpassword" name="confirmpassword" class="form-control" placeholder="Confirm Password" required>
-									</div>
-									<div class="form-group">
-										<button type="submit" id="form-submit" class="btn btn-primary btn-lg btn-block">Sign Up</button>
-									</div>
-									<div class="form-group d-md-flex">
-										<div class="w-50 text-left">
-													<!-- <label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-														<input type="checkbox" checked>
-														<span class="checkmark"></span>
-													</label> -->
-										</div>
-										<div class="w-50 text-md-right">
-											<a href="#">Forgot Password</a>
-										</div>
-									</div>
-								<div>
-							</form>
-							<p class="text-center">Already Registered ?<a class="text-center" href="{%url 'user_login'%}">Sign In</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-{%endblock content%}
+                <div class="user-details">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger">{{ message }}</div>  <!-- For error messages -->
+                        {% endfor %}
+                    {% endif %}
+                
+                    <div class="input-box">
+                        <span class="details">User Type</span>
+                        <select name="usertype" id="usertype" required>
+                            <option value="">Select User Type</option>
+                            <option value="Customer">Customer</option>
+                            <option value="Event_organizer">Event Organizer</option>
+                        </select>
+                    </div>
 
+                    <div class="input-box">
+                        
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">First Name</span>
+                        <input type="text" name="first_name" id="first_name" placeholder="Your First Name" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Last Name</span>
+                        <input type="text" id="last_name" name="last_name" placeholder="Your Last Name" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Username</span>
+                        <input type="text" id="username" name="username" placeholder="Choose a Username" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Email Address</span>
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Phone Number</span>
+                        <input type="number" id="mobile_no" name="mobile_no" placeholder="Your Phone Number" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Date of Birth</span>
+                        <input type="date" id="date_of_birth" name="date_of_birth" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Password</span>
+                        <input type="password" id="password" name="password" placeholder="Create a Password" required>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="details">Confirm Password</span>
+                        <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Repeat Password" required>
+                    </div>
+                </div>
+
+                <div class="button">
+                    <input type="submit" value="Register">
+                </div>
+
+                <p class="text-center">Already have an account? <a href="{% url 'user_login' %}">Sign In</a></p>
+            </form>
+        </div>
+    </section>
+</body>
