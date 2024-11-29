@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Purchase Ticket</title>
+</head>
+<body>
+    <h1>Purchase Ticket for {{ event.event_name }}</h1>
+    <p><strong>Price:</strong> ${{ event.ticket_price }}</p>
+    <p><strong>Available Tickets:</strong> {{ event.available_tickets }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit">Confirm Purchase</button>
+    </form>
+</body>
+</html>

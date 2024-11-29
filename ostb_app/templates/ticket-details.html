@@ -1,6 +1,6 @@
-{%extends "base.html"%}
+{% extends "base.html" %}
 
-{%load static%}
+{% load static %}
 
 {% block content %}
 
@@ -15,29 +15,68 @@
             <div class="col-lg-4">
                 <div class="right-content">
                     <h4>{{ event.event_name }}</h4>
-                    {% comment %} <span>{{ event.available_tickets }} Tickets still available</span> {% endcomment %}
                     <ul>
                         <li><i class="fa fa-clock-o"></i> {{ event.event_startdate|date:"l: H:i" }} to {{ event.event_enddate|date:"H:i" }}</li>
                         <li><i class="fa fa-map-marker"></i> {{ event.location }}</li>
+                        <li>Available Tickets: {{ event.available_tickets }}</li>
                     </ul>
                     <div class="quantity-content">
                         <div class="left-content">
                             <h6>Standard Ticket</h6>
-                            <p>INR {{ event.ticket_price }} per ticket</p>
+                            <p class = "text-black bold">INR {{ event.ticket_price }} per ticket</p>
                         </div>
-                        <div class="right-content">
-                            <div class="quantity buttons_added">
-                                <input type="button" value="-" class="minus">
-                                <input type="number" step="1" min="1" max="10" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" inputmode="numeric">
-                                <input type="button" value="+" class="plus">
-                            </div>
+                        <div class="total">
+                            <h4>Total: INR<span id="total-price-display">{{ event.ticket_price }}</span></h4>
+                            <h4>Available Tickets: {{ event.available_tickets }}</span></h4>
                         </div>
-                    </div>
-                    <div class="total">
-                        <h4>Total: INR<span id="total-price">{{ event.ticket_price }}</span></h4>
-                        <div class="main-dark-button"><a href="#">Purchase Tickets</a></div>
+                        <div class="main-dark-button">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#purchaseModal">Purchase Tickets</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Purchase Modal -->
+<div class="modal fade" id="purchaseModal" tabindex="-1" aria-labelledby="purchaseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="purchaseModalLabel">Purchase Tickets</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="{% url 'purchase_ticket' event.id %}">
+                    {% csrf_token %}
+                    <div class="quantity-content">
+                        <div class="quantity buttons_added">
+                            <label for="num_tickets">Select Quantity:</label>
+                            <input type="button" value="-" class="minus">
+                            <input 
+                                type="number" 
+                                step="1" 
+                                min="1" 
+                                max="{{ event.available_tickets }}" 
+                                name="num_tickets" 
+                                value="1" 
+                                id="num_tickets"
+                                title="Qty" 
+                                class="input-text qty text" 
+                                size="4" 
+                                inputmode="numeric">
+                            <input type="button" value="+" class="plus">
+                        </div>
+                    </div>
+                    <div class="total mt-3">
+                        <h4>Total: INR<span id="total-price-modal">{{ event.ticket_price }}</span></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm Purchase</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -46,13 +85,15 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const ticketPrice = {{ event.ticket_price }};
-        const quantityInput = document.querySelector('input[name="quantity"]');
-        const totalPriceElement = document.getElementById("total-price");
+        const quantityInput = document.getElementById('num_tickets');
+        const totalPriceDisplay = document.getElementById("total-price-display");
+        const totalPriceModal = document.getElementById("total-price-modal");
 
         function updateTotal() {
-            const quantity = parseInt(quantityInput.value, 10);
+            const quantity = parseInt(quantityInput.value, 10) || 1;
             const total = quantity * ticketPrice;
-            totalPriceElement.textContent = total.toFixed(2);
+            totalPriceDisplay.textContent = total.toFixed(2);
+            totalPriceModal.textContent = total.toFixed(2);
         }
 
         document.querySelector(".minus").addEventListener("click", function() {
@@ -63,7 +104,7 @@
         });
 
         document.querySelector(".plus").addEventListener("click", function() {
-            if (quantityInput.value < 10) {
+            if (quantityInput.value < {{ event.available_tickets }}) {
                 quantityInput.value++;
                 updateTotal();
             }
@@ -72,5 +113,5 @@
         quantityInput.addEventListener("input", updateTotal);
     });
 </script>
- 
- {% endblock content %}
+
+{% endblock content %}

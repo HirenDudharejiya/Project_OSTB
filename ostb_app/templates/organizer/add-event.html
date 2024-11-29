@@ -1,136 +1,287 @@
-{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{%load static%}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Tooplate">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
-{% block content %}
-    <div class="rent-venue-application">
+    <title>Online Sports Ticket Booking System</title>
+
+    <!-- CSS Files -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/owl-carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tooplate-artxibition.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        /* Light mode styles */
+        body {
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Poppins', sans-serif;
+        }
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #555;
+        }
+        header, footer {
+            background-color: #f0f0f0;
+            padding: 20px 0;
+        }
+        .nav > li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .sub-footer {
+            background-color: #e0e0e0;
+            padding: 20px 0;
+        }
+        .social-links ul li a {
+            color: #000;
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            background-color: #121212 !important;
+            color: #ffffff !important;
+        }
+        .dark-mode header, .dark-mode footer {
+            background-color: #1e1e1e !important;
+        }
+        .dark-mode a {
+            color: #ffffff !important;
+        }
+        .dark-mode .sub-footer {
+            background-color: #2a2a2a;
+        }
+        .dark-mode .social-links ul li a {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ***** Header Area Start ***** -->
+    <header class="header-area header-sticky">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9">
-                    <div class="heading-text">
-                        <h4>Create New Event</h4>
-                    </div>
-                    <div class="contact-form">
-                        <form action="{{add_event}}" method="POST">
-							{% csrf_token %}
-                        	<div class="row">
-                            	<div class="col-md-6 col-sm-12">
-									<fieldset>
-										<input name="event_name" type="text" id="" placeholder="Enter Event Name" required="">
-									</fieldset>
-								</div>
+                <div class="col-12">
+                    <nav class="main-nav">
+                        <a href="{% url 'index' %}" class="logo">OS<em>TB</em></a>
+                        <ul class="nav">
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            {% comment %} <li><a href="{% url 'events' %}">Events</a></li> {% endcomment %}
+                            <li><a href="{% url 'about' %}">About Us</a></li>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                                <li><a href="{% url 'user_login' %}">Login</a></li>
+                            {% endif %}
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- ***** Header Area End ***** -->
 
-								<div class="col-lg-12">
-									<fieldset>
-										<textarea name="event_description" rows="6" id="" placeholder="About The Event You Are Hosting" required=""></textarea>
-									</fieldset>
-								</div>
+    {% block content %}
+    <!-- Event Creation Form -->
+    <div class="container my-5">
+        <h2>Create Event</h2>
+        <form action="{% url 'add_event' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="event_name">Event Name:</label>
+                <input type="text" class="form-control" name="event_name" required>
+            </div>
 
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-										<label for="event_startdate">Start Date:</label>
-										<input name="event_startdate" type="datetime-local" id="" placeholder="Start Date" required="">
-									</fieldset>
-								</div>
+            <div class="form-group">
+                <label for="event_description">Event Description:</label>
+                <textarea class="form-control" name="event_description" required></textarea>
+            </div>
 
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-										<label for="enddate">End Date:</label>
-										<input name="event_enddate" type="datetime-local" id="" placeholder="End Date" required="">
-									</fieldset>
-								</div>
+            <div class="form-group">
+                <label for="event_startdate">Start Date:</label>
+                <input type="datetime-local" class="form-control" name="event_startdate" required>
+            </div>
 
-								<div class="col-md-6 col-sm-12">
-                                    <fieldset>
-                                        <input name="ticket_price" type="number" id="ticket_price" placeholder="Enter Ticket Price" required="">
-                                    </fieldset>
-								</div>
+            <div class="form-group">
+                <label for="event_enddate">End Date:</label>
+                <input type="datetime-local" class="form-control" name="event_enddate" required>
+            </div>
 
-								<div class="col-md-6 col-sm-12">
-                                    <fieldset>
-                                        <input name="quantity" type="number" id="quantity" placeholder="Enter Quantity" required="">
-                                    </fieldset>
+            <div class="form-group">
+                <label for="ticket_price">Ticket Price:</label>
+                <input type="number" class="form-control" name="ticket_price" required>
+            </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity:</label>
+                <input type="number" class="form-control" name="quantity" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Event Image:</label>
+                <input type="file" class="form-control" name="image" required>
+            </div>
+
+            <div class="form-group">
+                <label for="line1">Address Line 1:</label>
+                <input type="text" class="form-control" name="line1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="zipcode">Zip Code:</label>
+                <input type="text" class="form-control" name="zipcode" required>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" name="city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="state">State:</label>
+                <select class="form-control" name="state" required>
+					<option value="Andhra Pradesh">Andhra Pradesh</option>
+					<option value="Arunachal Pradesh">Arunachal Pradesh</option>
+					<option value="Assam">Assam</option>
+					<option value="Bihar">Bihar</option>
+					<option value="Chhattisgarh">Chhattisgarh</option>
+					<option value="Goa">Goa</option>
+					<option value="Gujarat">Gujarat</option>
+					<option value="Haryana">Haryana</option>
+					<option value="Himachal Pradesh">Himachal Pradesh</option>
+					<option value="Jharkhand">Jharkhand</option>
+					<option value="Karnataka">Karnataka</option>
+					<option value="Kerala">Kerala</option>
+					<option value="Madhya Pradesh">Madhya Pradesh</option>
+					<option value="Maharashtra">Maharashtra</option>
+					<option value="Manipur">Manipur</option>
+					<option value="Meghalaya">Meghalaya</option>
+					<option value="Mizoram">Mizoram</option>
+					<option value="Nagaland">Nagaland</option>
+					<option value="Odisha">Odisha</option>
+					<option value="Punjab">Punjab</option>
+					<option value="Rajasthan">Rajasthan</option>
+					<option value="Sikkim">Sikkim</option>
+					<option value="Tamil Nadu">Tamil Nadu</option>
+					<option value="Telangana">Telangana</option>
+					<option value="Tripura">Tripura</option>
+					<option value="Uttar Pradesh">Uttar Pradesh</option>
+					<option value="Uttarakhand">Uttarakhand</option>
+					<option value="West Bengal">West Bengal</option>
+					<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+					<option value="Chandigarh">Chandigarh</option>
+					<option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+					<option value="Delhi">Delhi</option>
+					<option value="Jammu and Kashmir">Jammu and Kashmir</option>
+					<option value="Ladakh">Ladakh</option>
+					<option value="Lakshadweep">Lakshadweep</option>
+					<option value="Puducherry">Puducherry</option>
+					
+                </select>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </div>
+        </form>
+    </div>
+    {% endblock content %}
+
+    <!-- *** Footer *** -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sub-footer">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="logo"><span>OS<em>TBS</em></span></div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="menu">
+                                    <ul>
+                                        <li><a href="{% url 'index' %}">Home</a></li>
+                                        {% comment %} <li><a href="{% url 'events' %}">Events</a></li> {% endcomment %}
+                                        {% comment %} <li><a href="{% url 'tickets' %}">Tickets</a></li> {% endcomment %}
+                                        <li><a href="{% url 'about' %}">About Us</a></li>
+                                    </ul>
                                 </div>
-
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-										<label for="image" class="form-label">Upload Image</label>
-                                        <input name="image" class="form-control form-control-lg" id="image" type="file" required />
-									</fieldset>
-								</div>
-
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-									  <input name="line1" type="text" id="line1" placeholder="Address Line-1" required="">
-									</fieldset>
-								</div>
-
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-									  <input name="zipcode" type="number" id="zipcode" placeholder="Zip Code" required="">
-									</fieldset>
-								</div>
-
-								<div class="col-md-6 col-sm-12">
-									<fieldset>
-									  <input name="city" type="text" id="city" placeholder="city" required="">
-									</fieldset>
-								</div>
-
-								<div class="col-lg-12">
-									<fieldset>
-									  <select name="state" id="state" class="form-control">
-										  <option value="Andhra Pradesh">Select State</option>
-										  <option value="Andhra Pradesh">Andhra Pradesh</option>
-										  <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
-										  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-										  <option value="Assam">Assam</option>
-										  <option value="Bihar">Bihar</option>
-										  <option value="Chandigarh">Chandigarh</option>
-										  <option value="Chhattisgarh">Chhattisgarh</option>
-										  <option value="Dadar and Nagar Haveli">Dadar and Nagar Haveli</option>
-										  <option value="Daman and Diu">Daman and Diu</option>
-										  <option value="Delhi">Delhi</option>
-										  <option value="Lakshadweep">Lakshadweep</option>
-										  <option value="Puducherry">Puducherry</option>
-										  <option value="Goa">Goa</option>
-										  <option value="Gujarat">Gujarat</option>
-										  <option value="Haryana">Haryana</option>
-										  <option value="Himachal Pradesh">Himachal Pradesh</option>
-										  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
-										  <option value="Jharkhand">Jharkhand</option>
-										  <option value="Karnataka">Karnataka</option>
-										  <option value="Kerala">Kerala</option>
-										  <option value="Madhya Pradesh">Madhya Pradesh</option>
-										  <option value="Maharashtra">Maharashtra</option>
-										  <option value="Manipur">Manipur</option>
-										  <option value="Meghalaya">Meghalaya</option>
-										  <option value="Mizoram">Mizoram</option>
-										  <option value="Nagaland">Nagaland</option>
-										  <option value="Odisha">Odisha</option>
-										  <option value="Punjab">Punjab</option>
-										  <option value="Rajasthan">Rajasthan</option>
-										  <option value="Sikkim">Sikkim</option>
-										  <option value="Tamil Nadu">Tamil Nadu</option>
-										  <option value="Telangana">Telangana</option>
-										  <option value="Tripura">Tripura</option>
-										  <option value="Uttar Pradesh">Uttar Pradesh</option>
-										  <option value="Uttarakhand">Uttarakhand</option>
-										  <option value="West Bengal">West Bengal</option>
-										</select>
-									</fieldset>
-								</div>
-
-								<div class="col-lg-12">
-									<fieldset>
-										<button type="submit" class="main-dark-button">Next</button>
-									</fieldset>
-								</div>
-                          </div>
-                        </form>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="social-links">
+                                    <ul>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-{% endblock content %}
+    </footer>
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- Plugins -->
+    <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+    <script src="{% static 'js/waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'js/imgfix.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.js' %}"></script>
+    <script src="{% static 'js/accordions.js' %}"></script>
+    <script src="{% static 'js/owl-carousel.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Global Init -->
+    <script src="{% static 'js/custom.js' %}"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <!-- Dark Mode Toggle Script -->
+    <script>
+        document.getElementById('darkModeToggle').addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+            
+            // Toggle button text
+            if (document.body.classList.contains('dark-mode')) {
+                this.textContent = 'Light Mode';
+            } else {
+                this.textContent = 'Dark Mode';
+            }
+            
+            // Optional: Store mode in localStorage
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+
+        // Load mode from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('darkModeToggle').textContent = 'Light Mode';
+            }
+        });
+    </script>
+</body>
+</html>

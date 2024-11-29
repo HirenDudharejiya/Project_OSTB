@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Pay for Event: {{ event.event_name }}</h2>
+    <p>Amount: ₹{{ event.ticket_price }}</p>
+
+    <form action="{% url 'payment_success' %}" method="POST">
+        {% csrf_token %}
+        <div id="razorpay-button-container"></div>
+        <input type="hidden" name="order_id" value="{{ order_id }}">
+        <input type="hidden" name="amount" value="{{ amount }}">
+    </form>
+</div>
+
+<!-- Razorpay script -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "{{ settings.RAZORPAY_KEY_ID }}", // Your Razorpay Key ID
+        "amount": "{{ amount }}", // Amount in paise
+        "currency": "INR",
+        "order_id": "{{ order_id }}", // Order ID
+        "name": "{{ event.event_name }}",
+        "description": "Payment for {{ event.event_name }}",
+        "image": "https://example.com/your-logo.png", // Your logo URL
+        "handler": function (response) {
+            var payment_id = response.razorpay_payment_id;
+            var order_id = response.razorpay_order_id;
+            var signature = response.razorpay_signature;
+
+            // Send the payment details to the server for validation
+            var form = document.createElement('form');
+            form.method = 'GET';
+            form.action = "{% url 'payment_success' %}";
+            
+            var payment_id_input = document.createElement('input');
+            payment_id_input.name = 'payment_id';
+            payment_id_input.value = payment_id;
+            form.appendChild(payment_id_input);
+            
+            var order_id_input = document.createElement('input');
+            order_id_input.name = 'order_id';
+            order_id_input.value = order_id;
+            form.appendChild(order_id_input);
+            
+            var signature_input = document.createElement('input');
+            signature_input.name = 'signature';
+            signature_input.value = signature;
+            form.appendChild(signature_input);
+
+            document.body.appendChild(form);
+            form.submit();
+        },
+        "prefill": {
+            "name": "{{ user_profile.name }}",
+            "email": "{{ user_profile.user.email }}",
+            "contact": "{{ user_profile.phone }}"
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on('payment.failed', function (response) {
+        alert(response.error.description);
+    });
+    rzp1.open();
+</script>
+{% endblock %}

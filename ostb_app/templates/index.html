@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-        <!-- ***** Preloader Start ***** -->
-        <div id="js-preloader" class="js-preloader">
-            <div class="preloader-inner">
-            <span class="dot"></span>
-            <div class="dots">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            </div>
-        </div>
-        <!-- ***** Preloader End ***** -->
         
 {% block content %}
     <!-- ***** Main Banner Area Start ***** -->
@@ -36,83 +24,6 @@
     </div>
     <!-- ***** Main Banner Area End ***** -->
 
-    <!-- *** Owl Carousel Items ***-->
-    <div class="show-events-carousel">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="owl-show-events owl-carousel">
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-01.jpg'%}" alt=""></a>
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-02.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-03.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-04.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-01.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-02.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-03.jpg'%}" alt=""></a> 
-                        </div>
-                        <div class="item">
-                            <a href="{%url 'event_list'%}"><img src="{%static 'images/img-carousel-04.jpg'%}" alt=""></a> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!-- *** Tickets Section ***-->
-{% comment %} <div class="venue-tickets">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-heading">
-                    <h2>Tickets</h2>
-                </div>
-            </div>
-
-            {% for ticket in events %}
-            <div class="col-lg-4">
-                <div class="venue-item">
-                    <div class="thumb">
-                        <img src="{{ ticket.event.image.url }}" alt="Ticket Image">
-                    </div>
-                    <div class="down-content">
-                        <div class="left-content">
-                            <div class="main-white-button">
-                                <a href=" ">Purchase Tickets</a>
-                            </div>
-                        </div>
-                        <div class="right-content">
-                            <h4>{{ ticket.event.event_name }}</h4>
-                            <p>{{ ticket.event.event_description|truncatewords:20 }}</p>
-                            <ul>
-                                <li><i class="fa fa-sitemap"></i>{{ ticket.quantity }}</li>
-                                <li><i class="fa fa-user"></i>{{ ticket.available_ticket }}</li>
-                            </ul>
-                            <div class="price">
-                                <span>1 ticket<br>from <em>INR {{ ticket.ticket_price }}</em></span>
-                            </div>
-                        </div> 
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div> {% endcomment %}
-
 <!-- *** Coming Events Section ***-->
 <div class="coming-events">
     <div class="container">
@@ -121,20 +32,31 @@
             <div class="col-lg-4">
                 <div class="event-item">
                     <div class="thumb">
-                        <img src="{{ event.image.url }}" alt="Event Image">
+                        <!-- Display the event image if available -->
+                        {% if event.image %}
+                            <img src="{{ event.image.url }}" alt="{{ event.event_name }} - Event Image" class="img-fluid">
+                        {% endif %}
                     </div>
                     <div class="down-content">
-                        <a href="{% url 'ticket_details' event.id %}">
+                        <a href="{% url 'ticket_detail' event.id %}">
                             <h4>{{ event.event_name }}</h4>
                         </a>
                         <ul>
                             <li><i class="fa fa-clock-o"></i> {{ event.event_startdate|date:"l: H:i" }} - {{ event.event_enddate|date:"H:i" }}</li>
-                            <li><i class="fa fa-map-marker"></i> {{ event.line1 }}, {{ event.city }}, {{ event.state }}</li>
+                            <li><i class="fa fa-map-marker"></i> 
+                                {% if event.line1 and event.city and event.state %}
+                                    {{ event.line1 }}, {{ event.city }}, {{ event.state }}
+                                {% else %}
+                                    Location details unavailable
+                                {% endif %}
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+        {% empty %}
+            <p>No events found.</p>
+        {% endfor %}
         </div>
     </div>
 </div>

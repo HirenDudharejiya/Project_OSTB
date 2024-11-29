@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="payment-success-page">
+    <div class="container text-center">
+        <div class="success-icon">
+            <i class="fa fa-check-circle" style="font-size: 100px; color: #28a745;"></i>
+        </div>
+        <h1 class="display-4 text-success">Payment Successful!</h1>
+        <p class="lead">Your transaction is complete. Thank you for purchasing tickets to this event.</p>
+
+        <div class="payment-details">
+            <p><strong class="text-black bold">Acknowledgement No:</strong> <span class="text-dark">{{ payment.acknowledgement_no }}</span></p>
+            <p><strong class="text-black bold">Total Amount Paid: INR</strong>  <span class="text-dark">{{ payment.amount }}</span></p>
+            <p><strong class="text-black bold">Event:</strong> <span class="text-dark">{{ payment.event_model.event_name }}</span></p>
+        </div>
+
+        <div class="action-buttons mt-5">
+            <a href="{% url 'event_detail' payment.event_model.id %}" class="btn btn-lg btn-primary mr-3">View Event</a>
+            <a href="{% url 'index' %}" class="btn btn-lg btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .payment-success-page {
+        padding: 80px 0;
+        background-color: #f4f7fa;
+        min-height: 100vh;
+    }
+
+    .success-icon {
+        margin-bottom: 30px;
+    }
+
+    .payment-details {
+        margin: 30px 0;
+        font-size: 1.2rem;
+        color: #333;
+        text-align: left;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .payment-details p {
+        margin-bottom: 10px;
+    }
+
+    .payment-details .text-black {
+        color: #000; /* Solid black */
+    }
+
+    .payment-details .bold {
+        font-weight: 700; /* Bold text */
+    }
+
+    .payment-details span {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    h1.display-4 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    p.lead {
+        font-size: 1.25rem;
+        color: #555;
+    }
+
+    .btn-lg {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 30px;
+        text-transform: uppercase;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-primary:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        border-color: #545b62;
+        transform: translateY(-2px);
+    }
+
+    .mt-5 {
+        margin-top: 40px;
+    }
+
+    /* Make sure the design is responsive */
+    @media (max-width: 767px) {
+        .payment-success-page {
+            padding: 60px 15px;
+        }
+
+        h1.display-4 {
+            font-size: 2rem;
+        }
+
+        .payment-details {
+            font-size: 1rem;
+        }
+
+        .btn-lg {
+            padding: 10px 18px;
+            font-size: 1rem;
+        }
+    }
+</style>
+
+{% endblock content %}

@@ -15,7 +15,7 @@ class UserProfile(models.Model):
     usertype = models.CharField(choices=USER_TYPE, max_length=20, default='default_value')
 
     def __str__(self):
-        return self.users_model.username
+        return self.users_model.username    
 
 # Models for Event Details
 class Event(models.Model):
@@ -25,18 +25,24 @@ class Event(models.Model):
     event_enddate = models.DateTimeField()
     ticket_price = models.FloatField()
     quantity = models.PositiveIntegerField()
-    available_tickets = models.PositiveIntegerField(default=0) 
+    available_tickets = models.PositiveIntegerField()
     image = models.ImageField(upload_to='events/images/', default='path/to/default/image.jpg')
     line1 = models.CharField(max_length=50, default='Default Address')
     zipcode = models.CharField(max_length=10, default='000000')
     city = models.CharField(max_length=50, default='Default City')
     state = models.CharField(max_length=50, default='Default State')
+    organizer = models.ForeignKey(UserProfile, on_delete=models.CASCADE)  # This is the foreign key for organizer
 
     class Meta:
         verbose_name_plural = "Event"
 
     def __str__(self):
         return self.event_name
+    
+    @property
+    def location(self):
+        # Combine the fields into a single string
+        return f"{self.line1}, {self.city}, {self.state}, {self.zipcode}"
 
 # Models for Payment
 class Payment(models.Model):
